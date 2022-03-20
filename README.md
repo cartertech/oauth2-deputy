@@ -2,10 +2,6 @@
 
 [![Latest Version](https://img.shields.io/github/release/cartertech/oauth2-deputy.svg?style=flat-square)](https://github.com/cartertech/oauth2-deputy/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/cartertech/oauth2-deputy/master.svg?style=flat-square)](https://travis-ci.org/cartertech/oauth2-deputy)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/cartertech/oauth2-deputy.svg?style=flat-square)](https://scrutinizer-ci.com/g/cartertech/oauth2-deputy/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/cartertech/oauth2-deputy.svg?style=flat-square)](https://scrutinizer-ci.com/g/cartertech/oauth2-deputy)
-[![Total Downloads](https://img.shields.io/packagist/dt/cartertech/oauth2-deputy.svg?style=flat-square)](https://packagist.org/packages/cartertech/oauth2-deputy)
 
 This package provides Deputy OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
