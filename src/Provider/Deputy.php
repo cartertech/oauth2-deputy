@@ -14,10 +14,12 @@ namespace Cartertech\OAuth2\Client\Provider;
 
 use Exception;
 use InvalidArgumentException;
+use GuzzleHttp\Exception\BadResponseException;
 use League\OAuth2\Client\Grant\AbstractGrant;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 //DEBUG
@@ -55,6 +57,11 @@ class Deputy extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {    
+        if (strcmp($params['grant_type'],"refresh_token") == 0)
+        {
+            return $this->domain.'/oauth/access_token';
+            
+        }
         return $this->domain . '/my/oauth/access_token';
     }
 
@@ -191,5 +198,62 @@ class Deputy extends AbstractProvider
         }
 
         return $this;
+    }
+    
+    //DEBUG
+    /**
+     * Requests an access token using a specified grant and option set.
+     *
+     * @param  mixed $grant
+     * @param  array $options
+     * @throws IdentityProviderException
+     * @return AccessTokenInterface
+     */
+    public function getAccessToken($grant, array $options = [])
+    {
+        $grant = $this->verifyGrant($grant);
+        
+        $params = [
+            'client_id'     => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'redirect_uri'  => $this->redirectUri,
+        ];
+        
+        $params   = $grant->prepareRequestParameters($params, $options);
+        $request  = $this->getAccessTokenRequest($params);
+       
+        $response = $this->getParsedResponse($request);
+
+        if (false === is_array($response)) {
+            throw new UnexpectedValueException(
+                'Invalid response received from Authorization Server. Expected JSON.'
+                );
+        }
+        $prepared = $this->prepareAccessTokenResponse($response);
+        $token    = $this->createAccessToken($prepared, $grant);
+        
+        return $token;
+    }
+    
+    /**
+     * Sends a request and returns the parsed response.
+     *
+     * @param  RequestInterface $request
+     * @throws IdentityProviderException
+     * @return mixed
+     */
+    public function getParsedResponse(RequestInterface $request)
+    {
+        try {
+            $response = $this->getResponse($request);
+        } catch (BadResponseException $e) {
+            $response = $e->getResponse();
+        }
+        
+        $parsed = $this->parseResponse($response);
+        
+        $this->checkResponse($response, $parsed);
+        
+        return $parsed;
     }
 }
