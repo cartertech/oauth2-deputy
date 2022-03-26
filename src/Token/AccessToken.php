@@ -36,6 +36,6 @@ class AccessToken extends \League\OAuth2\Client\Token\AccessToken
     
     public function getResourceOwnerDetailsUrl()
     {
-        return $this->endpointUrl."/api/v1/me";
+        return 'https://'.$this->endpointUrl."/api/v1/me";
     }
 }
