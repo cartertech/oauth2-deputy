@@ -1,30 +1,28 @@
 {
-    "name": "cartertech/oauth2-deputy",
-    "description": "Deputy OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Nathan Carter",
-            "email": "oss@carter-tech.com.au",
-            "homepage": "https://github.com/cartertech"
-        }
-    ],
-    "keywords": [
-        "oauth",
-        "oauth2",
-        "client",
-        "authorization",
-        "authorisation",
-        "deputy",
+	"name" : "cartertech/oauth2-deputy",
+	"description" : "Deputy OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Nathan Carter",
+			"email" : "oss@carter-tech.com.au",
+			"homepage" : "https://github.com/cartertech"
+		}
+	],
+	"keywords" : [
+		"oauth",
+		"oauth2",
+		"client",
+		"authorization",
+		"authorisation",
+		"deputy",
 		"deputy-api"
-    ],
-    "require": {
-        "league/oauth2-client": "^2.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Cartertech\\OAuth2\\Client\\": "src/"
-        }
-    },
-    
+	],
+	"require" : {
+		"league/oauth2-client" : "^2.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Cartertech\\OAuth2\\Client\\" : "src/"
+		}
+	}
 }
