@@ -60,6 +60,22 @@ class DeputyResourceOwner implements ResourceOwnerInterface
     {
         return $this->response['FirstName'] ?: null;
     }
+	
+	 /**
+     * Returns the name of the resource owner.
+     * @return string|null
+     */    
+    public function getName()
+    {
+		if ($this->response['FirstName'] && $this->response['LastName'])
+		{
+			return $this->response['FirstName']." ".$this->response['LastName'];
+		}
+		else
+		{
+			return null;
+		}
+    }
     
     /**
      * Return the email of the resource owner.
