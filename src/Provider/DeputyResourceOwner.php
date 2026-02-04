@@ -112,6 +112,27 @@ class DeputyResourceOwner implements ResourceOwnerInterface
     {
         return $this->response['Permissions'] ?: null;
     }
+	
+	  /**
+     * Return the sites assigned to the the resource owner.
+     * @return array|null
+     */
+     public function getSites()
+     {
+		 $sites = null;
+		 
+		 if ($this->response['Workplace'])
+		 {
+			 foreach ($this->response['Workplace'] as $site)
+			 {
+				 $sites[] = array ('Id' => $site['Id'],
+					'Code' => $site['Code'],
+					'Name' => $site['CompanyName']
+					);
+			 }
+		 }
+         return $sites;
+     }
 
     /**
      * Returns the raw resource owner response.

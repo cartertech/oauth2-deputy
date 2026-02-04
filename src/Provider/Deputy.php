@@ -70,6 +70,18 @@ class Deputy extends AbstractProvider
     {
         return $token->getResourceOwnerDetailsUrl();
     }
+	
+	/**
+	 * Get url to fetch user roles and assigned sites
+	 *
+	 * @param AccessToken $token
+	 *
+	 * @return string
+	 */
+	public function getResourceOwnerSitesRolesUrl(AccessToken $token)
+	{
+		return $token->getResourceOwnerSitesRolesUrl();
+	}
 
     /**
      * Get the default scopes used by this provider.
@@ -125,6 +137,40 @@ class Deputy extends AbstractProvider
     protected function getAuthorizationHeaders($token = null)
     {
         return ['Authorization' => 'OAuth ' . $token];
+    }
+	
+	/**
+     * Requests resource owner details.
+     *
+     * @param  AccessToken $token
+     * @return mixed
+     * @throws IdentityProviderException
+     * @throws UnexpectedValueException
+     * @throws GuzzleException
+     */
+	protected function fetchResourceOwnerDetails(AccessToken $token)
+    {
+        $url = $this->getResourceOwnerDetailsUrl($token);
+
+        $request = $this->getAuthenticatedRequest(self::METHOD_GET, $url, $token);
+
+        $response = $this->getParsedResponse($request);
+		
+		$url = $this->getResourceOwnerSitesRolesUrl($token);
+		
+		$request = $this->getAuthenticatedRequest(self::METHOD_GET, $url, $token);
+		
+		$siterolesresponse = $this->getParsedResponse($request);
+		
+		$response['Workplace'] = $siterolesresponse['Workplace'] ?: null;
+
+        if (false === is_array($response)) {
+            throw new UnexpectedValueException(
+                'Invalid response received from Authorization Server. Expected JSON.'
+            );
+        }
+
+        return $response;
     }
 
     /**

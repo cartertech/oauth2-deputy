@@ -33,9 +33,26 @@ class AccessToken extends \League\OAuth2\Client\Token\AccessToken
     {
         return $this->endpointUrl;
     }
+	
+	/**
+	 * Returns Deputy URL for getting details about the logged in user.
+	 *
+	 * @return string
+	 */
     
     public function getResourceOwnerDetailsUrl()
     {
         return 'https://'.$this->endpointUrl."/api/v1/me";
     }
+	
+	/**
+	 * Returns Deputy URL for getting details about the logged in user's assigned
+	 * work locations and roles.
+	 *
+	 * @return string
+	 */
+	public function getResourceOwnerSitesRolesUrl()
+	{
+		return 'https://'.$this->endpointUrl.'/api/v1/my/setup';
+	}
 }
