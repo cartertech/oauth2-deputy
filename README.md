@@ -22,7 +22,8 @@ $provider = new Cartertech\OAuth2\Client\Provider\Deputy([
 
 ```
 For further usage of this package please refer to the [core package documentation on "Authorization Code Grant"](https://github.com/thephpleague/oauth2-client#usage).
-To configure Deputy to allow OAuth authentication please refer to [Deputy's documentation](https://developer.deputy.com/docs/using-oauth-20)
+
+To configure Deputy to allow OAuth authentication please refer to [Deputy's documentation](https://developer.deputy.com/docs/using-oauth-20).
 
 ### Refreshing a Token
 
@@ -55,4 +56,5 @@ For further usage of this package please refer to the [core package documentatio
 ## License
 
 The MIT License (MIT). Please see [License File](https://github.com/cartertech/oauth2-deputy/blob/master/LICENSE) for more information.
+
 
