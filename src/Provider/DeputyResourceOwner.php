@@ -32,7 +32,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */
     public function getId()
     {
-        return $this->response[$this->resourceOwnerId];
+        return $this->response[$this->resourceOwnerId] ?? null;
     }
     
     /**
@@ -41,7 +41,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */
     public function getLogin()
     {
-        return $this->response['Login'] ?: null;        
+        return $this->response['Login'] ?? null;        
     }
     /**
      * Returns the lastname of the resource owner.
@@ -49,7 +49,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */
     public function getLastName()
     {
-        return $this->response['LastName'] ?: null;
+        return $this->response['LastName'] ?? null;
     }
     
     /**
@@ -58,7 +58,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */    
     public function getFirstName()
     {
-        return $this->response['FirstName'] ?: null;
+        return $this->response['FirstName'] ?? null;
     }
 	
 	 /**
@@ -67,14 +67,13 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */    
     public function getName()
     {
-		if ($this->response['FirstName'] && $this->response['LastName'])
+		$first = $this->response['FirstName'] ?? null;
+		$last = $this->response['LastName'] ?? null;
+		if (!empty($first) && !empty($last))
 		{
-			return $this->response['FirstName']." ".$this->response['LastName'];
+			return $first." ".$last;
 		}
-		else
-		{
-			return null;
-		}
+		return null;
     }
     
     /**
@@ -83,7 +82,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */
     public function getEmail()
     {
-        return $this->response['PrimaryEmail'] ?: null;
+        return $this->response['PrimaryEmail'] ?? null;
     }
     
     /**
@@ -92,7 +91,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */
     public function getPhone()
     {
-        return $this->response['PrimaryPhone'] ?: null;
+        return $this->response['PrimaryPhone'] ?? null;
     }
     
     /**
@@ -101,7 +100,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */
     public function getPhotoUrl()
     {
-        return $this->response['UserObjectforAPI']['Photo'] ?: null;
+        return $this->response['UserObjectforAPI']['Photo'] ?? null;
     }
     
     /**
@@ -110,7 +109,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      */
     public function getPermissions()
     {
-        return $this->response['Permissions'] ?: null;
+        return $this->response['Permissions'] ?? null;
     }
 	
 	  /**
@@ -121,7 +120,7 @@ class DeputyResourceOwner implements ResourceOwnerInterface
      {
 		 $sites = null;
 		 
-		 if ($this->response['Workplace'])
+		 if (!empty($this->response['Workplace'] ?? null))
 		 {
 			 foreach ($this->response['Workplace'] as $site)
 			 {

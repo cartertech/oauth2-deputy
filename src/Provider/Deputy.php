@@ -118,16 +118,6 @@ class Deputy extends AbstractProvider
     }
     
     /**
-     * Returns the URL for fetching Resource Owner details
-     * @return string
-     */
-    
-    public function getUrlResourceOwnerDetails()
-    {
-        return $this->urlResourceOwnerDetails;
-    }
-    
-    /**
      * Returns the authorization headers used by this provider.
      *
      * @param  mixed|null $token Either a string or an access token instance
@@ -155,20 +145,20 @@ class Deputy extends AbstractProvider
         $request = $this->getAuthenticatedRequest(self::METHOD_GET, $url, $token);
 
         $response = $this->getParsedResponse($request);
-		
-		$url = $this->getResourceOwnerSitesRolesUrl($token);
-		
-		$request = $this->getAuthenticatedRequest(self::METHOD_GET, $url, $token);
-		
-		$siterolesresponse = $this->getParsedResponse($request);
-		
-		$response['Workplace'] = $siterolesresponse['Workplace'] ?: null;
 
         if (false === is_array($response)) {
             throw new UnexpectedValueException(
                 'Invalid response received from Authorization Server. Expected JSON.'
             );
         }
+
+		$url = $this->getResourceOwnerSitesRolesUrl($token);
+
+		$request = $this->getAuthenticatedRequest(self::METHOD_GET, $url, $token);
+
+		$siterolesresponse = $this->getParsedResponse($request);
+
+		$response['Workplace'] = is_array($siterolesresponse) ? ($siterolesresponse['Workplace'] ?? null) : null;
 
         return $response;
     }
@@ -185,11 +175,8 @@ class Deputy extends AbstractProvider
     {
         $statusCode = $response->getStatusCode();
         if ($statusCode >= 400) {
-            throw new IdentityProviderException(
-                isset($data[0]['message']) ? $data[0]['message'] : $response->getReasonPhrase(),
-                $statusCode,
-                $response
-            );
+            $message = $data[0]['message'] ?? $data['message'] ?? $response->getReasonPhrase();
+            throw new IdentityProviderException($message, $statusCode, $response);
         }
     }
 

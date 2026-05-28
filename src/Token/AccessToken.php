@@ -21,7 +21,7 @@ class AccessToken extends \League\OAuth2\Client\Token\AccessToken
     {
         parent::__construct($options);
 
-        $this->endpointUrl = $options['endpoint'];
+        $this->endpointUrl = $options['endpoint'] ?? null;
     }
 
     /**
